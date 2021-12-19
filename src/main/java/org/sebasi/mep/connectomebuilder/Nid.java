@@ -1,5 +1,6 @@
 package org.sebasi.mep.connectomebuilder;
 
+// This is a neuron ID.
 public class Nid {
 
     // Why 5 bytes?
@@ -8,6 +9,13 @@ public class Nid {
     // Five bytes gives us a max value of about 1 trillion, should be plenty.
     static int NUM_BYTES_IN_NID = 5;
     static int STRING_VALUE_LENGTH = (NUM_BYTES_IN_NID * 2) + (NUM_BYTES_IN_NID - 1);
+
+    static {
+        //noinspection ConstantConditions
+        if (NUM_BYTES_IN_NID <= 1) {
+            throw new RuntimeException("Need at least one byte in Nid.");
+        }
+    }
 
     private byte[] bytes = new byte[NUM_BYTES_IN_NID];
 
@@ -90,5 +98,37 @@ public class Nid {
             return (byte) (c - 'a' + 10);
         }
         throw new RuntimeException("Illegal hexadecimal character: '" + c + "'");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Nid nid = (Nid) o;
+        for (int i = 0; i < NUM_BYTES_IN_NID; i++) {
+            if (bytes[i] != nid.bytes[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // For the hash code, we'll most likely not be comparing stuff with the most significant byte different.
+    @Override
+    public int hashCode() {
+        switch (NUM_BYTES_IN_NID) {
+            case 1:
+                return bytes[0];
+            case 2:
+                return bytes[1] + (bytes[0] << 8);
+            case 3:
+                return bytes[2] + (bytes[1] << 8) + (bytes[2] << 16);
+            default:
+                return bytes[3] + (bytes[2] << 8) + (bytes[1] << 16) + (bytes[0] << 24);
+        }
     }
 }
