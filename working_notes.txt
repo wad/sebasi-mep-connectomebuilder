@@ -1,0 +1,37 @@
+brain-wide changes to reconfigure traffic: certain connections weaken, others strengthen.
+Affects connection strength and rapid-fire profiles. Need variations on connection types.
+Neurotransmitters and neuromodulators.
+Analogy: weather. Makes for fast reconfig.
+
+clusters and hubs.
+
+Plasticity: Connections become more or less numerous. connections strengthen when neurons fire together, and weaker when alone. Slow reconfigure.
+
+Neurons repurpose themselves, can do different jobs.
+
+Always on, always chatting to itself. Required continual inputs.
+
+Complexity: can reconfigure into enormous number of different patterns. Reuses bits of old patterns. Trial and error to find useful patterns.
+
+tuning and pruning: start with way too many connections, gradually remove ones that aren't used. Ones that are used get faster, and are included in more patterns.
+
+Define initial connectome by ingesting drawing of clusters and hubs. Can output current state to updated image, animated showing activity.
+
+Brain persisted to SSD.
+
+What does "firing together" mean? At the same time? Physical proximity? Both?
+
+Tentative connections (dendrite buds) appear, and if not used, vanish.
+
+Senses: rare sounds are tuned out.
+
+Brains require a complex social world, sensory integration, to develop.
+
+What parameters to vary?
+- cluster size
+- hub density
+- range of connection str
+- rate of change of connection str
+- Num different weather types
+- rapid fire rate, duration.
+
