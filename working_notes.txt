@@ -1,25 +1,29 @@
+=====================================
+=== NOTES CAPTURED WHILE STUDYING ===
+=====================================
+
 brain-wide changes to reconfigure traffic: certain connections weaken, others strengthen.
 Affects connection strength and rapid-fire profiles. Need variations on connection types.
 Neurotransmitters and neuromodulators.
 Analogy: weather. Makes for fast reconfig.
 
-clusters and hubs.
+Overall structure: Clusters and hubs (airports analogy).
 
-Plasticity: Connections become more or less numerous. connections strengthen when neurons fire together, and weaker when alone. Slow reconfigure.
+Plasticity: Connections become more or less numerous.
+Connections strengthen when neurons fire together, and weaker when alone. Slow reconfigure.
 
 Neurons repurpose themselves, can do different jobs.
 
 Always on, always chatting to itself. Required continual inputs.
 
-Complexity: can reconfigure into enormous number of different patterns. Reuses bits of old patterns. Trial and error to find useful patterns.
+Complexity: can reconfigure into enormous number of different patterns. Reuses bits of old patterns.
+Trial and error to find useful patterns.
 
-tuning and pruning: start with way too many connections, gradually remove ones that aren't used. Ones that are used get faster, and are included in more patterns.
+Tuning and pruning: start with way too many connections, gradually remove ones that aren't used.
+Ones that are used get faster, and are included in more patterns.
 
-Define initial connectome by ingesting drawing of clusters and hubs. Can output current state to updated image, animated showing activity.
-
-Brain persisted to SSD.
-
-What does "firing together" mean? At the same time? Physical proximity? Both?
+Maybe define initial connectome by ingesting drawing of clusters and hubs.
+Can output current state to updated image, animated showing activity.
 
 Tentative connections (dendrite buds) appear, and if not used, vanish.
 
@@ -27,7 +31,10 @@ Senses: rare sounds are tuned out.
 
 Brains require a complex social world, sensory integration, to develop.
 
-What parameters to vary?
+========================================
+=== IDEAS ON SOME PARAMETERS TO VARY ===
+========================================
+
 - cluster size
 - hub density
 - range of connection str
@@ -35,3 +42,25 @@ What parameters to vary?
 - Num different weather types
 - rapid fire rate, duration.
 
+============================
+=== LIST OF THINGS TO DO ===
+============================
+
+Figure out how to implement hubs. Clusters are easy, but what do hubs look like?
+
+Figure out specifically how "neurons that fire together wire together" works, and implement it.
+If neuron A fires, and a short time later, neuron B fires, what would indicate that they are "together", and that they should both be strengthened?
+Are we assuming that both A and B are connected to C?
+
+Figure out how to persist state to SSD drives. How much space is needed? Can probably just directly use the file system.
+Put files in directories. But the data won't all fit into memory, and each tick, all fired neurons will need to be accessed.
+Maybe a local database makes more sense. Don't need RDBMS, mostly it would just be for looking up what neurons are connected to
+each dendritic tree, and the connection strengths.
+
+Would it work to specify initial connectome via an image? Black background.
+White pixels in clumps representing clusters, lines between them representing hub connections?
+Maybe not, just specify with a properties file instead.
+
+Set up background chatter.
+
+Thoughts on how to provide a rich social environment for training.
