@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.sebasi.mep.connectomebuilder.generator.ConnectomeGenerationSpecificationVersion.INITIAL_001;
 
 public class JsonTests {
 
@@ -32,7 +31,7 @@ public class JsonTests {
         clusterSpec2.numNeuronsMax = 200;
         clusterSpec2.eachNeuronListensToHowManyOtherNeuronsInThisCluster = 30;
 
-        ConnectomeGenerationSpecification spec = new ConnectomeGenerationSpecification(INITIAL_001);
+        ConnectomeGenerationSpecification spec = new ConnectomeGenerationSpecification();
         List<ClusterSpecification> clusterSpecs = new ArrayList<>();
         clusterSpecs.add(clusterSpec1);
         clusterSpecs.add(clusterSpec2);

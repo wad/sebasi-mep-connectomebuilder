@@ -13,21 +13,10 @@ public class ConnectomeGenerationSpecification {
     ConnectomeGenerationSpecificationVersion connectomeGenerationSpecificationVersion;
     List<ClusterSpecification> clusterSpecificationList;
 
-    private final ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public ConnectomeGenerationSpecification() {
-        this(DEFAULT_VERSION);
-    }
-
-    public ConnectomeGenerationSpecification(ConnectomeGenerationSpecificationVersion version) {
-        this(version, new ObjectMapper());
-    }
-
-    public ConnectomeGenerationSpecification(
-            ConnectomeGenerationSpecificationVersion version,
-            ObjectMapper objectMapper) {
-        this.connectomeGenerationSpecificationVersion = version;
-        this.objectMapper = objectMapper;
+        this.connectomeGenerationSpecificationVersion = DEFAULT_VERSION;
     }
 
     public static ConnectomeGenerationSpecification fromJson(String json) {
