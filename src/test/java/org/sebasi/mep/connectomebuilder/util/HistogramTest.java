@@ -3,7 +3,7 @@ package org.sebasi.mep.connectomebuilder.util;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.sebasi.mep.connectomebuilder.util.Histogram.DESIRED_BAR_LENGTH;
+import static org.sebasi.mep.connectomebuilder.util.Histogram.DEFAULT_DESIRED_BAR_LENGTH;
 
 public class HistogramTest {
 
@@ -48,8 +48,17 @@ public class HistogramTest {
 
     @Test
     public void testDetermineNumCharsInBar() {
-        assertEquals(0, Histogram.determineNumCharsInBar(0, 100));
-        assertEquals(DESIRED_BAR_LENGTH >> 1, Histogram.determineNumCharsInBar(50, 100));
-        assertEquals(DESIRED_BAR_LENGTH, Histogram.determineNumCharsInBar(100, 100));
+        assertEquals(0, Histogram.determineNumCharsInBar(
+                0,
+                100,
+                DEFAULT_DESIRED_BAR_LENGTH));
+        assertEquals(DEFAULT_DESIRED_BAR_LENGTH >> 1, Histogram.determineNumCharsInBar(
+                50,
+                100,
+                DEFAULT_DESIRED_BAR_LENGTH));
+        assertEquals(DEFAULT_DESIRED_BAR_LENGTH, Histogram.determineNumCharsInBar(
+                100,
+                100,
+                DEFAULT_DESIRED_BAR_LENGTH));
     }
 }

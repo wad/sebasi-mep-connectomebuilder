@@ -14,7 +14,9 @@ public class JsonTests {
         ConnectomeGenerationSpecification specOriginal = makeSpec();
         String jsonStringOriginal = specOriginal.toJson();
         assertEquals(
-                "{\"connectomeGenerationSpecificationVersion\":\"INITIAL_001\",\"clusterSpecificationList\":[{\"numNeuronsMin\":10,\"numNeuronsMax\":20,\"eachNeuronListensToHowManyOtherNeuronsInThisCluster\":3},{\"numNeuronsMin\":100,\"numNeuronsMax\":200,\"eachNeuronListensToHowManyOtherNeuronsInThisCluster\":30}]}",
+                "{\"connectomeGenerationSpecificationVersion\":\"INITIAL_001\",\"clusterSpecificationList\":[" +
+                        "{\"numNeuronsMin\":10,\"numNeuronsMax\":20,\"eachNeuronListensToHowManyOtherNeuronsInThisCluster\":3}" +
+                        ",{\"numNeuronsMin\":100,\"numNeuronsMax\":200,\"eachNeuronListensToHowManyOtherNeuronsInThisCluster\":30}]}",
                 jsonStringOriginal);
         ConnectomeGenerationSpecification fromString = ConnectomeGenerationSpecification.fromJson(jsonStringOriginal);
         assertEquals(jsonStringOriginal, fromString.toJson());

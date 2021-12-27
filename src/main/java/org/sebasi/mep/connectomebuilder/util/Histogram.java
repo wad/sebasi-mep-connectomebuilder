@@ -6,8 +6,8 @@ import java.util.Map;
 // Just a hacky little histogram viewer.
 public class Histogram {
 
-    static final int DESIRED_NUM_BUCKETS = 20;
-    static final int DESIRED_BAR_LENGTH = 40;
+    static final int DEFAULT_DESIRED_NUM_BUCKETS = 20;
+    static final int DEFAULT_DESIRED_BAR_LENGTH = 40;
 
     private final Map<Integer, Integer> countsByX = new HashMap<>();
 
@@ -16,14 +16,29 @@ public class Histogram {
     }
 
     public String show() {
+        return show(
+                DEFAULT_DESIRED_NUM_BUCKETS,
+                DEFAULT_DESIRED_BAR_LENGTH);
+    }
+
+    public String show(
+            int desiredNumBuckets,
+            int desiredBarLength) {
         StringBuilder builder = new StringBuilder();
-        makeReport(builder, "");
+        makeReport(
+                builder,
+                "",
+                desiredNumBuckets,
+                desiredBarLength);
+
         return builder.toString();
     }
 
     public void makeReport(
             StringBuilder builder,
-            String linePrefix) {
+            String linePrefix,
+            int desiredNumBuckets,
+            int desiredBarLength) {
         int minX = 0;
         int maxX = 0;
         int maxCount = 0;
@@ -59,8 +74,8 @@ public class Histogram {
 
         int bucketRange = maxX - minX;
         int numBuckets = bucketRange + 1;
-        if (numBuckets > DESIRED_NUM_BUCKETS) {
-            numBuckets = DESIRED_NUM_BUCKETS;
+        if (numBuckets > desiredNumBuckets) {
+            numBuckets = desiredNumBuckets;
         }
 
         int[] lowestValuesForBuckets = new int[numBuckets];
@@ -99,7 +114,10 @@ public class Histogram {
                     maxX,
                     maxCountInBucket,
                     count));
-            int numCharsInBar = determineNumCharsInBar(count, maxCountInBucket);
+            int numCharsInBar = determineNumCharsInBar(
+                    count,
+                    maxCountInBucket,
+                    desiredBarLength);
             for (int j = 0; j < numCharsInBar; j++) {
                 builder.append("#");
             }
@@ -159,7 +177,7 @@ public class Histogram {
             int maxCount,
             int count) {
 
-        // Line prefix looks like: "0-210 (2345)    | "
+        // Line prefix looks like: "0,210 (2345)    | "
         int maxDigitsOfRangePortion = (String.valueOf(maxX).length()) * 2;
         maxDigitsOfRangePortion += 2; // the dash character, and the trailing space.
         int maxDigitsOfCountPortion = String.valueOf(maxCount).length();
@@ -183,13 +201,14 @@ public class Histogram {
 
     static int determineNumCharsInBar(
             int count,
-            int maxCount) {
+            int maxCount,
+            int desiredBarLength) {
         if (count == 0 || maxCount == 0) {
             return 0;
         }
 
         double p = (double) count / (double) maxCount;
-        double t = p * DESIRED_BAR_LENGTH;
+        double t = p * desiredBarLength;
         return (int) t;
     }
 }

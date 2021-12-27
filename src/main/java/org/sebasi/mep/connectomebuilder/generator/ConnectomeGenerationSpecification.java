@@ -3,6 +3,8 @@ package org.sebasi.mep.connectomebuilder.generator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static org.sebasi.mep.connectomebuilder.generator.ConnectomeGenerationSpecificationVersion.DEFAULT_VERSION;
@@ -11,6 +13,7 @@ import static org.sebasi.mep.connectomebuilder.generator.ConnectomeGenerationSpe
 public class ConnectomeGenerationSpecification {
 
     ConnectomeGenerationSpecificationVersion connectomeGenerationSpecificationVersion;
+
     List<ClusterSpecification> clusterSpecificationList;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -19,15 +22,17 @@ public class ConnectomeGenerationSpecification {
         this.connectomeGenerationSpecificationVersion = DEFAULT_VERSION;
     }
 
-    public static ConnectomeGenerationSpecification fromJson(String json) {
-        return fromJson(
-                json,
-                new ObjectMapper());
+    public static ConnectomeGenerationSpecification fromJson(File fileWithJson) {
+        try {
+            return objectMapper.readValue(fileWithJson, ConnectomeGenerationSpecification.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read file: " + fileWithJson.getAbsolutePath(), e);
+        }
     }
 
-    public static ConnectomeGenerationSpecification fromJson(
-            String json,
-            ObjectMapper objectMapper) {
+    public static ConnectomeGenerationSpecification fromJson(String json) {
         try {
             return objectMapper.readValue(json, ConnectomeGenerationSpecification.class);
         } catch (JsonProcessingException e) {

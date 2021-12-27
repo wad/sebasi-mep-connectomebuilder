@@ -24,7 +24,7 @@ public class Neuron {
         accumulatedSignal = 0;
     }
 
-    public void checkUpstreamConnections(NeuronGroup neuronGroup) {
+    public void checkUpstreamConnections(Brain neuronGroup) {
         for (Synapse synapse : dendriticSynapses) {
             if (neuronGroup.getNeuron(synapse.getAxonalNid()).getDidJustFire()) {
                 accumulatedSignal += synapse.getSynapseStrength();
