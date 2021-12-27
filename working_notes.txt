@@ -43,6 +43,11 @@ Brains require a complex social world, sensory integration, to develop.
 
 Add body state, including some sort of cycle, like day and night. Sleep?
 
+Stages of development:
+1. Superabundant initial connections
+2. Sensory stimulation plus spontaneous firing, see which connections are useful, strengthen them, and remove the others
+3. Remove entire neurons that lack sufficient connectivity
+
 ========================================
 === IDEAS ON SOME PARAMETERS TO VARY ===
 ========================================
