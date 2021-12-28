@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public enum GenSpecVersion {
 
-    // Once we define a version, don't change it, as it will break backwards compatibility for saved json files.
+    // Don't go back and change versions, unless you're okay with breaking backwards compatibility on previous json files.
     INITIAL_001("INITIAL_001");
 
     private final String label;

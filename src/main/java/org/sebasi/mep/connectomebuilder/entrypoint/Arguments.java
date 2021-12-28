@@ -21,6 +21,12 @@ public class Arguments {
     Command command;
 
     @Parameter(
+            names = {"--saveFileWithPath"},
+            description = "The full path and filename of the file where state is saved or loaded from."
+    )
+    String saveFileWithPath;
+
+    @Parameter(
             names = {"--brainSpecs"},
             description = "Comma-delimited list of path-and-filenames to json files specifying brain setups."
     )
@@ -38,6 +44,10 @@ public class Arguments {
 
     public Command getCommand() {
         return command;
+    }
+
+    public String getSaveFileWithPath() {
+        return saveFileWithPath;
     }
 
     public List<String> getBrainSpecs() {
