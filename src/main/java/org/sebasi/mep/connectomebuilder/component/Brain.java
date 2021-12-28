@@ -1,4 +1,4 @@
-package org.sebasi.mep.connectomebuilder;
+package org.sebasi.mep.connectomebuilder.component;
 
 import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenerationSpecification;
 

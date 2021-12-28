@@ -1,4 +1,4 @@
-package org.sebasi.mep.connectomebuilder;
+package org.sebasi.mep.connectomebuilder.component;
 
 import java.util.HashSet;
 import java.util.Set;

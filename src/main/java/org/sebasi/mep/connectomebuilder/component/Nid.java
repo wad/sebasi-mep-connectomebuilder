@@ -1,4 +1,4 @@
-package org.sebasi.mep.connectomebuilder;
+package org.sebasi.mep.connectomebuilder.component;
 
 // This is a neuron ID.
 public class Nid {
