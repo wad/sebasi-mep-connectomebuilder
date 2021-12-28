@@ -26,6 +26,12 @@ public class Arguments {
     )
     String brainSpecs;
 
+    @Parameter(
+            names = {"--numTicks"},
+            description = "Number of ticks to run before exiting."
+    )
+    int numTicks;
+
     public boolean isHelp() {
         return help;
     }
@@ -40,5 +46,9 @@ public class Arguments {
         }
 
         return Arrays.asList(brainSpecs.split(","));
+    }
+
+    public int getNumTicks() {
+        return numTicks;
     }
 }

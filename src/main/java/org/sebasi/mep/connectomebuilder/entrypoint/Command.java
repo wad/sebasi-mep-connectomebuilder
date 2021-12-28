@@ -2,7 +2,7 @@ package org.sebasi.mep.connectomebuilder.entrypoint;
 
 public enum Command {
 
-    RunDemo("Run a quick demo.");
+    runDemo("Run a quick demo.");
 
     String descriptionMessage;
 
@@ -24,7 +24,7 @@ public enum Command {
 
     public void invoke(Arguments arguments) {
         switch(this) {
-            case RunDemo:
+            case runDemo:
                 new CommandRunDemo(arguments);
                 break;
             default:

@@ -12,7 +12,7 @@ public class CommandRunDemo extends CommandParent {
     }
 
     public void run() {
-        int numTicksToRun = 10;
+        int numTicksToRun = arguments.getNumTicks();
 
         World world = new World();
 
