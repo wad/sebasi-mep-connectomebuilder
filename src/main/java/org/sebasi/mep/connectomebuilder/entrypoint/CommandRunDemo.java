@@ -1,23 +1,22 @@
-package org.sebasi.mep.connectomebuilder;
+package org.sebasi.mep.connectomebuilder.entrypoint;
 
-import java.util.Arrays;
+import org.sebasi.mep.connectomebuilder.World;
+
 import java.util.List;
 
-public class Demo {
+public class CommandRunDemo extends CommandParent {
 
-    // todo: add JCommander
-    public static void main(String... args) {
-        Demo demo = new Demo();
-        List<String> brainSpecs = Arrays.asList(args);
-        demo.runDemo(brainSpecs);
+    public CommandRunDemo(Arguments arguments) {
+        super(arguments);
+        run();
     }
 
-    private void runDemo(List<String> brainSpecs) {
-
+    public void run() {
         int numTicksToRun = 10;
 
         World world = new World();
 
+        List<String> brainSpecs = arguments.getBrainSpecs();
         for (String brainSpec : brainSpecs) {
             world.generateBrain(brainSpec);
         }
