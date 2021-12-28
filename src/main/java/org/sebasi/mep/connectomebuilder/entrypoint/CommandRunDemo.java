@@ -14,15 +14,15 @@ public class CommandRunDemo extends CommandParent {
     public void run() {
         int numTicksToRun = arguments.getNumTicks();
 
-        Room world = new Room();
+        Room room = new Room();
 
         List<String> brainSpecs = arguments.getBrainSpecs();
         for (String brainSpec : brainSpecs) {
-            world.generateBody(brainSpec);
+            room.generateBody(brainSpec);
         }
 
-        System.out.println("Starting world with " + brainSpecs.size() + " brains, running for " + numTicksToRun + " ticks.");
-        world.startTicking(numTicksToRun);
-        System.out.println("Ending world.");
+        System.out.println("Starting room with " + brainSpecs.size() + " bodies, running for " + numTicksToRun + " ticks.");
+        room.startTicking(numTicksToRun);
+        System.out.println("Ending room.");
     }
 }

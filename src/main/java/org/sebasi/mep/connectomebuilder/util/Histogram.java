@@ -178,7 +178,7 @@ public class Histogram {
             int count) {
 
         // Line prefix looks like: "0,210 (2345)    | "
-        int maxDigitsOfRangePortion = (String.valueOf(maxX).length()) * 2;
+        int maxDigitsOfRangePortion = ((String.valueOf(maxX).length()) * 2) + 2;
         maxDigitsOfRangePortion += 2; // the dash character, and the trailing space.
         int maxDigitsOfCountPortion = String.valueOf(maxCount).length();
         maxDigitsOfCountPortion += 3; // the two parenthesis, and the trailing space.

@@ -4,38 +4,38 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public enum ConnectomeGenerationSpecificationVersion {
+public enum GenSpecVersion {
 
     // Once we define a version, don't change it, as it will break backwards compatibility for saved json files.
     INITIAL_001("INITIAL_001");
 
     private final String label;
 
-    public static final ConnectomeGenerationSpecificationVersion DEFAULT_VERSION = INITIAL_001;
+    public static final GenSpecVersion DEFAULT_VERSION = INITIAL_001;
 
-    ConnectomeGenerationSpecificationVersion(String label) {
+    GenSpecVersion(String label) {
         this.label = label;
     }
 
-    public static ConnectomeGenerationSpecificationVersion determineViaJson(
+    public static GenSpecVersion determineViaJson(
             String json,
             ObjectMapper objectMapper) {
         try {
             JsonNode jsonObject = objectMapper.readTree(json);
-            JsonNode versionAsJsonObject = jsonObject.get("connectomeGenerationSpecificationVersion");
+            JsonNode versionAsJsonObject = jsonObject.get("genSpecVersion");
             return determineViaVersionString(versionAsJsonObject.asText());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static ConnectomeGenerationSpecificationVersion determineViaVersionString(String valueFound) {
-        ConnectomeGenerationSpecificationVersion[] values = values();
-        for (ConnectomeGenerationSpecificationVersion value : values) {
+    public static GenSpecVersion determineViaVersionString(String valueFound) {
+        GenSpecVersion[] values = values();
+        for (GenSpecVersion value : values) {
             if (value.label.equals(valueFound)) {
                 return value;
             }
         }
-        throw new RuntimeException("Unsupported ConnectomeGenerationSpecificationVersion: '" + valueFound + "'");
+        throw new RuntimeException("Unsupported GenSpecVersion: '" + valueFound + "'");
     }
 }

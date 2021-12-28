@@ -1,7 +1,7 @@
 package org.sebasi.mep.connectomebuilder.component;
 
 // This is a neuron ID.
-public class Nid {
+public class Nid extends AbstractComponent {
 
     // Why 5 bytes?
     // Four bytes gives us a max value of about 4 billion.

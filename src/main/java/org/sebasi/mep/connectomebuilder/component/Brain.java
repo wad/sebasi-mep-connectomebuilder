@@ -1,15 +1,16 @@
 package org.sebasi.mep.connectomebuilder.component;
 
-import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenerationSpecification;
+import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Brain {
+public class Brain extends AbstractComponent {
 
+    // A brain has a bunch of neurons.
     private Map<Nid, Neuron> neuronsByNid = new HashMap<>();
 
-    public Brain(ConnectomeGenerationSpecification spec) {
+    public Brain(ConnectomeGenSpec spec) {
         // todo: Apply the spec to generate a brain.
     }
 

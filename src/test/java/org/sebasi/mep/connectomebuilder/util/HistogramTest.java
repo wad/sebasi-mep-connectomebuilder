@@ -12,8 +12,7 @@ public class HistogramTest {
         Histogram histogram = new Histogram();
         histogram.addDataPoint(10);
         String output = histogram.show();
-        assertEquals(
-                "10,10 (1)  | ########################################\n", output);
+        assertEquals("10,10 (1)    | ########################################\n", output);
     }
 
     @Test
@@ -24,16 +23,16 @@ public class HistogramTest {
         String output = histogram.show();
         System.out.println(output);
         assertEquals(
-                "1,1 (1)    | ########################################\n" +
-                        "2,2 (0)    | \n" +
-                        "3,3 (0)    | \n" +
-                        "4,4 (0)    | \n" +
-                        "5,5 (0)    | \n" +
-                        "6,6 (0)    | \n" +
-                        "7,7 (0)    | \n" +
-                        "8,8 (0)    | \n" +
-                        "9,9 (0)    | \n" +
-                        "10,10 (1)  | ########################################\n", output);
+                "1,1 (1)      | ########################################\n" +
+                        "2,2 (0)      | \n" +
+                        "3,3 (0)      | \n" +
+                        "4,4 (0)      | \n" +
+                        "5,5 (0)      | \n" +
+                        "6,6 (0)      | \n" +
+                        "7,7 (0)      | \n" +
+                        "8,8 (0)      | \n" +
+                        "9,9 (0)      | \n" +
+                        "10,10 (1)    | ########################################\n", output);
     }
 
     @Test

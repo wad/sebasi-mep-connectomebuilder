@@ -1,12 +1,12 @@
 package org.sebasi.mep.connectomebuilder.generator;
 
-public class ClusterSpecification {
+public class ClusterSpec {
 
     int numNeuronsMin;
     int numNeuronsMax;
     int eachNeuronListensToHowManyOtherNeuronsInThisCluster;
 
-    public ClusterSpecification() {
+    public ClusterSpec() {
     }
 
     public int getNumNeuronsMin() {

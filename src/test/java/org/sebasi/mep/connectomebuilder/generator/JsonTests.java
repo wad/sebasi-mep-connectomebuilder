@@ -11,33 +11,33 @@ public class JsonTests {
 
     @Test
     public void testRoundTrips() {
-        ConnectomeGenerationSpecification specOriginal = makeSpec();
+        ConnectomeGenSpec specOriginal = makeSpec();
         String jsonStringOriginal = specOriginal.toJson();
         assertEquals(
-                "{\"connectomeGenerationSpecificationVersion\":\"INITIAL_001\",\"clusterSpecificationList\":[" +
+                "{\"genSpecVersion\":\"INITIAL_001\",\"clusterSpecList\":[" +
                         "{\"numNeuronsMin\":10,\"numNeuronsMax\":20,\"eachNeuronListensToHowManyOtherNeuronsInThisCluster\":3}" +
                         ",{\"numNeuronsMin\":100,\"numNeuronsMax\":200,\"eachNeuronListensToHowManyOtherNeuronsInThisCluster\":30}]}",
                 jsonStringOriginal);
-        ConnectomeGenerationSpecification fromString = ConnectomeGenerationSpecification.fromJson(jsonStringOriginal);
+        ConnectomeGenSpec fromString = ConnectomeGenSpec.fromJson(jsonStringOriginal);
         assertEquals(jsonStringOriginal, fromString.toJson());
     }
 
-    ConnectomeGenerationSpecification makeSpec() {
-        ClusterSpecification clusterSpec1 = new ClusterSpecification();
+    ConnectomeGenSpec makeSpec() {
+        ClusterSpec clusterSpec1 = new ClusterSpec();
         clusterSpec1.numNeuronsMin = 10;
         clusterSpec1.numNeuronsMax = 20;
         clusterSpec1.eachNeuronListensToHowManyOtherNeuronsInThisCluster = 3;
 
-        ClusterSpecification clusterSpec2 = new ClusterSpecification();
+        ClusterSpec clusterSpec2 = new ClusterSpec();
         clusterSpec2.numNeuronsMin = 100;
         clusterSpec2.numNeuronsMax = 200;
         clusterSpec2.eachNeuronListensToHowManyOtherNeuronsInThisCluster = 30;
 
-        ConnectomeGenerationSpecification spec = new ConnectomeGenerationSpecification();
-        List<ClusterSpecification> clusterSpecs = new ArrayList<>();
+        ConnectomeGenSpec spec = new ConnectomeGenSpec();
+        List<ClusterSpec> clusterSpecs = new ArrayList<>();
         clusterSpecs.add(clusterSpec1);
         clusterSpecs.add(clusterSpec2);
-        spec.clusterSpecificationList = clusterSpecs;
+        spec.clusterSpecList = clusterSpecs;
 
         return spec;
     }
