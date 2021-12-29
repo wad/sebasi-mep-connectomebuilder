@@ -27,7 +27,7 @@ public class Neuron extends AbstractComponent {
 
     public void checkUpstreamConnections(Brain neuronGroup) {
         for (Synapse synapse : dendriticSynapses) {
-            if (neuronGroup.getNeuron(synapse.getAxonalNid()).getDidJustFire()) {
+            if (neuronGroup.getNeuron(synapse.getPreSynapticNid()).getDidJustFire()) {
                 accumulatedSignal += synapse.getSynapseStrength();
             }
         }
@@ -39,5 +39,13 @@ public class Neuron extends AbstractComponent {
 
     public void resetFiringStatus() {
         justFired = false;
+    }
+
+    @Override
+    public void report(StringBuilder builder) {
+        builder.append("\nNumber of synapses: ").append(dendriticSynapses.size());
+        for (Synapse dendriticSynapse : dendriticSynapses) {
+            dendriticSynapse.report(builder);
+        }
     }
 }

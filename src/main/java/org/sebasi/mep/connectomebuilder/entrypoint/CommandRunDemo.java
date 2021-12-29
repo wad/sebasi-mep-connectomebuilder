@@ -23,6 +23,9 @@ public class CommandRunDemo extends CommandParent {
 
         System.out.println("Starting room with " + brainSpecs.size() + " bodies, running for " + numTicksToRun + " ticks.");
         room.startTicking(numTicksToRun);
-        System.out.println("Ending room.");
+
+        StringBuilder builder = new StringBuilder("Report:");
+        room.report(builder);
+        System.out.println(builder);
     }
 }

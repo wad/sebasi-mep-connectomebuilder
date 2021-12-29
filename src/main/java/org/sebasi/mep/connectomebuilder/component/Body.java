@@ -1,5 +1,7 @@
 package org.sebasi.mep.connectomebuilder.component;
 
+import org.apache.commons.lang3.StringUtils;
+
 // Turns out that a brain just has too much dependency on a body, it can't run alone.
 public class Body extends AbstractComponent {
 
@@ -26,5 +28,14 @@ public class Body extends AbstractComponent {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void report(StringBuilder builder) {
+        if (!StringUtils.isEmpty(name)) {
+            builder.append("\nName: ").append(name);
+        }
+        bodyWellness.report(builder);
+        brain.report(builder);
     }
 }

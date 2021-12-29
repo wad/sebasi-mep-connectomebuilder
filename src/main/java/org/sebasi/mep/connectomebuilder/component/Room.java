@@ -29,4 +29,12 @@ public class Room extends AbstractComponent {
             }
         }
     }
+
+    @Override
+    public void report(StringBuilder builder) {
+        builder.append("\nNum bodies in room: ").append(bodies.size());
+        for (Body body : bodies) {
+            body.report(builder);
+        }
+    }
 }

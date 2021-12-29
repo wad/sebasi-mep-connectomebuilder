@@ -1,8 +1,12 @@
 package org.sebasi.mep.connectomebuilder.component;
 
+import org.sebasi.mep.connectomebuilder.generator.ClusterSpec;
 import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
+import org.sebasi.mep.connectomebuilder.util.GlobalStaticHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Brain extends AbstractComponent {
@@ -11,7 +15,18 @@ public class Brain extends AbstractComponent {
     private Map<Nid, Neuron> neuronsByNid = new HashMap<>();
 
     public Brain(ConnectomeGenSpec spec) {
-        // todo: Apply the spec to generate a brain.
+        for (ClusterSpec clusterSpec : spec.getClusterSpecList()) {
+            int numNeurons = GlobalStaticHelper.getRandomUtil().getRandomNumber(
+                    clusterSpec.getNumNeuronsMin(),
+                    clusterSpec.getNumNeuronsMax());
+            List<Nid> cluster = new ArrayList<>(numNeurons);
+            for (int i = 0; i < numNeurons; i++) {
+                Neuron neuron = new Neuron();
+                Nid nid = new Nid();
+                cluster.add(nid);
+                neuronsByNid.put(nid, neuron);
+            }
+        }
     }
 
     public Neuron getNeuron(Nid nid) {
@@ -22,5 +37,10 @@ public class Brain extends AbstractComponent {
         neuronsByNid.values().forEach(Neuron::fireIfReady);
         neuronsByNid.values().forEach(n -> n.checkUpstreamConnections(this));
         neuronsByNid.values().forEach(Neuron::resetFiringStatus);
+    }
+
+    @Override
+    public void report(StringBuilder builder) {
+        builder.append("\nNumber of neurons: ").append(neuronsByNid.size());
     }
 }

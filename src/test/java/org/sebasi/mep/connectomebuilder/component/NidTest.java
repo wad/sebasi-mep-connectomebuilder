@@ -3,13 +3,14 @@ package org.sebasi.mep.connectomebuilder.component;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NidTest {
 
     @Test
-    public void testNumBytesIsFive() {
-        assertEquals(5, Nid.NUM_BYTES_IN_NID);
-        assertEquals(14, Nid.STRING_VALUE_LENGTH);
+    public void verifyAcceptableNumberOfBytes() {
+        assertTrue(Nid.NUM_BYTES_IN_NID < Long.BYTES);
+        assertTrue(Nid.NUM_BYTES_IN_NID >= 1);
     }
 
     @Test

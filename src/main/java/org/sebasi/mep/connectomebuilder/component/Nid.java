@@ -1,7 +1,7 @@
 package org.sebasi.mep.connectomebuilder.component;
 
-// This is a neuron ID.
-public class Nid extends AbstractComponent {
+// Neuron ID.
+public class Nid {
 
     // Why 5 bytes?
     // Four bytes gives us a max value of about 4 billion.
@@ -10,6 +10,9 @@ public class Nid extends AbstractComponent {
     static int NUM_BYTES_IN_NID = 5;
     static int STRING_VALUE_LENGTH = (NUM_BYTES_IN_NID * 2) + (NUM_BYTES_IN_NID - 1);
 
+    // used for sequential nid generation.
+    static long nextNid = 0L;
+
     static {
         //noinspection ConstantConditions
         if (NUM_BYTES_IN_NID <= 1) {
@@ -17,7 +20,7 @@ public class Nid extends AbstractComponent {
         }
     }
 
-    private byte[] bytes = new byte[NUM_BYTES_IN_NID];
+    private final byte[] bytes = new byte[NUM_BYTES_IN_NID];
 
     // In format "aa.bb.cc.dd.ee"
     public Nid(String value) {
@@ -40,7 +43,15 @@ public class Nid extends AbstractComponent {
         }
     }
 
-    // bytes in order of most significant, to least significant
+    // This makes sequential nids.
+    public Nid() {
+        for (int i = 0; i < NUM_BYTES_IN_NID; i++) {
+            bytes[NUM_BYTES_IN_NID - 1 - i] = (byte) ((nextNid >> (i << 3)) & 0xFFL);
+        }
+        nextNid++;
+    }
+
+    // bytes in order of the most significant, to the least significant
     public Nid(byte... segments) {
 
         if (segments == null) {

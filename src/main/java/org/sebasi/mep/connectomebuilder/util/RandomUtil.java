@@ -33,10 +33,17 @@ public class RandomUtil {
 
     // returns a value between 0 and max, inclusive
     public int getRandomNumber(int max) {
-        if (max < 1) {
-            return 0;
+        return getRandomNumber(0, max);
+    }
+
+    public int getRandomNumber(
+            int min,
+            int max) {
+        int range = max - min;
+        if (range < 1) {
+            return min;
         }
-        return random.nextInt(max + 1);
+        return min + random.nextInt(range + 1);
     }
 
     public int getRandomNumberInNormalDistribution(
