@@ -1,3 +1,5 @@
+Design document link: https://docs.google.com/document/d/1BSnQlyP14tOMubVGYOAM8K7sRPbaF5jT8RM1JiKsDlU/edit?usp=sharing
+
 ==================================================
 === NOTES AND INSIGHTS CAPTURED WHILE STUDYING ===
 ==================================================

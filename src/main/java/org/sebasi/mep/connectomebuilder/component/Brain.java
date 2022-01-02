@@ -12,24 +12,24 @@ import java.util.Map;
 public class Brain extends AbstractComponent {
 
     // A brain has a bunch of neurons.
-    private Map<Nid, Neuron> neuronsByNid = new HashMap<>();
+    private Map<NidUtil, Neuron> neuronsByNid = new HashMap<>();
 
     public Brain(ConnectomeGenSpec spec) {
         for (ClusterSpec clusterSpec : spec.getClusterSpecList()) {
             int numNeurons = GlobalStaticHelper.getRandomUtil().getRandomNumber(
                     clusterSpec.getNumNeuronsMin(),
                     clusterSpec.getNumNeuronsMax());
-            List<Nid> cluster = new ArrayList<>(numNeurons);
+            List<NidUtil> cluster = new ArrayList<>(numNeurons);
             for (int i = 0; i < numNeurons; i++) {
                 Neuron neuron = new Neuron();
-                Nid nid = new Nid();
-                cluster.add(nid);
-                neuronsByNid.put(nid, neuron);
+//                NidUtil nid = new NidUtil();
+//                cluster.add(nid);
+//                neuronsByNid.put(nid, neuron);
             }
         }
     }
 
-    public Neuron getNeuron(Nid nid) {
+    public Neuron getNeuron(NidUtil nid) {
         return neuronsByNid.get(nid);
     }
 

@@ -4,18 +4,18 @@ public class Synapse extends AbstractComponent {
 
     // A synapse belongs to the neuron on the post-synaptic side of the connection.
     // It does know the nid of the neuron on the pre-synaptic side, whose axon connects to this dendrite.
-    private Nid preSynapticNid;
+    private NidUtil preSynapticNid;
 
     private int synapseStrength;
 
     public Synapse(
-            Nid preSynapticNid,
+            NidUtil preSynapticNid,
             int synapseStrength) {
         this.preSynapticNid = preSynapticNid;
         this.synapseStrength = synapseStrength;
     }
 
-    public Nid getPreSynapticNid() {
+    public NidUtil getPreSynapticNid() {
         return preSynapticNid;
     }
 
