@@ -27,10 +27,6 @@ public class NidUtil {
     // Fits in a `long` but leaves 3 extra unused bytes.
     static final int NUM_BYTES_IN_NID = NUM_BYTES_IN_RID + NUM_BYTES_IN_CID + NUM_BYTES_IN_LID;
 
-    private NidUtil() {
-        // Don't instantiate this object, just use static methods.
-    }
-
     // Each string must be the correct length, 5 bytes long, ten characters, with hexadecimal values.
     public static byte[] makeNidsFromStringsOfHexNids(String... hexStrings) {
         byte[] nids = new byte[hexStrings.length * NUM_BYTES_IN_NID];
@@ -130,6 +126,39 @@ public class NidUtil {
         return (short) ((bytesHoldingNids[byteIndex + 3] << 8) + bytesHoldingNids[byteIndex + 4]);
     }
 
+    public static byte getRidFromHexString(String ridString) {
+        if (ridString.length() != NUM_BYTES_IN_RID * 2) {
+            throw new RuntimeException("Invalid RID specified: '" + ridString + "'");
+        }
+        return stringToByte(ridString);
+    }
+
+    public static short getCidFromHexString(String cidString) {
+        if (cidString.length() != NUM_BYTES_IN_CID * 2) {
+            throw new RuntimeException("Invalid CID specified: '" + cidString + "'");
+        }
+        return (short)((stringToByte(cidString.substring(0, 2)) << 8) + stringToByte(cidString.substring(2, 4)));
+    }
+
+    public static short getLidFromHexString(String lidString) {
+        if (lidString.length() != NUM_BYTES_IN_LID * 2) {
+            throw new RuntimeException("Invalid LID specified: '" + lidString + "'");
+        }
+        return (short)((stringToByte(lidString.substring(0, 2)) << 8) + stringToByte(lidString.substring(2, 4)));
+    }
+
+    public static String convertRidToHexString(byte rid) {
+        return byteToString(rid);
+    }
+
+    public static String convertCidToHexString(short cid) {
+        return byteToString((byte)(cid >> 8)) + byteToString((byte)(cid & 0xFF));
+    }
+
+    public static String convertLidToHexString(short lid) {
+        return byteToString((byte)(lid >> 8)) + byteToString((byte)(lid & 0xFF));
+    }
+
     static int getByteIndexOfNidWithValidation(
             byte[] bytesHoldingNids,
             int indexOfNidNotByte) {
@@ -173,7 +202,7 @@ public class NidUtil {
         return String.format("%02X", b);
     }
 
-    static byte stringToByte(String s) {
+    public static byte stringToByte(String s) {
         if (s == null || s.length() != 2) {
             throw new RuntimeException("Invalid byte received: '" + s + "'");
         }

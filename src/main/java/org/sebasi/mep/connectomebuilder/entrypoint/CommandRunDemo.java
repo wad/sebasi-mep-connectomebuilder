@@ -30,7 +30,7 @@ public class CommandRunDemo extends CommandParent {
         room.report(builder);
         System.out.println(builder);
 
-        String saveFileWithPath = arguments.getSaveFileWithPath();
+        String saveFileWithPath = arguments.getEinParentDirectory();
         System.out.println("Saving to " + saveFileWithPath);
         SaveFile saveFile = new SaveFile(saveFileWithPath);
         saveFile.prepareForSaving();

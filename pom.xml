@@ -70,7 +70,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        org.sebasi.mep.connectomebuilder.entrypoint.CommandLineInvoker
+                                        org.sebasi.mep.connectomebuilder.entrypoint.EntryPoint
                                     </mainClass>
                                 </manifest>
                             </archive>

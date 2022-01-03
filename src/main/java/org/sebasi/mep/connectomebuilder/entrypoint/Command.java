@@ -2,7 +2,11 @@ package org.sebasi.mep.connectomebuilder.entrypoint;
 
 public enum Command {
 
-    runDemo("Run a quick demo.");
+    runDemo("Run a quick demo."),
+    createDirectoryStructure(""),
+    createDataFiles(""),
+    runRegion(""),
+    startTicking("");
 
     String descriptionMessage;
 
@@ -26,6 +30,18 @@ public enum Command {
         switch(this) {
             case runDemo:
                 new CommandRunDemo(arguments);
+                break;
+            case createDirectoryStructure:
+                new CommandCreateDirectoryStructure(arguments);
+                break;
+            case createDataFiles:
+                new CommandCreateDataFiles(arguments);
+                break;
+            case runRegion:
+                new CommandRunRegion(arguments);
+                break;
+            case startTicking:
+                new CommandStartTicking(arguments);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + this);

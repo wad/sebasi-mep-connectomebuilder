@@ -83,4 +83,22 @@ public class NidUtilTest {
         assertEquals((short) 0x5656, NidUtil.getLidFromNids(nids, 1));
         assertEquals((short) 0x5678, NidUtil.getLidFromNids(nids, 2));
     }
+
+    @Test
+    public void testGetRidFromHexString() {
+        assertEquals(4, NidUtil.getRidFromHexString("04"));
+        assertEquals(254, NidUtil.getRidFromHexString("fe"));
+    }
+
+    @Test
+    public void testGetCidFromHexString() {
+        assertEquals(4, NidUtil.getCidFromHexString("0004"));
+        assertEquals(65534, NidUtil.getCidFromHexString("fffe"));
+    }
+
+    @Test
+    public void testGetLidFromHexString() {
+        assertEquals(4, NidUtil.getLidFromHexString("0004"));
+        assertEquals(65534, NidUtil.getLidFromHexString("fffe"));
+    }
 }

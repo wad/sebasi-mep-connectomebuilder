@@ -1,10 +1,13 @@
 package org.sebasi.mep.connectomebuilder.entrypoint;
 
 import com.beust.jcommander.JCommander;
+import org.sebasi.mep.connectomebuilder.util.TextOutput;
 
-public class CommandLineInvoker {
+public class EntryPoint {
 
     public static void main(String... args) {
+
+        TextOutput.showMessage("\n\nThis is the MCB! Note that it's a work in progress. Assume nothing works.\n\n");
 
         Arguments arguments = new Arguments();
         JCommander jCommander = JCommander
