@@ -1,7 +1,5 @@
 package org.sebasi.mep.connectomebuilder.util;
 
-import org.sebasi.mep.connectomebuilder.component.NidUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,6 +27,11 @@ public class FileUtil {
     private static final int FILENAME_DENDRITIC_TREE_LENGTH = "XXXX.dt".length();
     private static final int FILENAME_DENDRITIC_TREE_REMOTE_LENGTH = "XX_XXXX_XXXX.dtr".length();
     private static final int FILENAME_PLASTIC_LENGTH = "XXXX.plastic".length();
+
+    // Note: To send messages from the driving computer to the region computers (or body and room computers)
+    // we can just drop json files in the control directory, and configure the other computers to check
+    // to see if one has arrived. Then it can open it, parse the contents, and take the appropriate action,
+    // such as emitting a report.
 
     public static boolean isShutdownFilePresent(
             String pathToControlDirectory,

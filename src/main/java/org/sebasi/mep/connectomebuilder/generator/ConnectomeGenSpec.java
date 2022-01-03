@@ -13,8 +13,7 @@ import static org.sebasi.mep.connectomebuilder.generator.GenSpecVersion.DEFAULT_
 public class ConnectomeGenSpec {
 
     GenSpecVersion genSpecVersion;
-
-    List<ClusterSpec> clusterSpecList;
+    List<RegionSpec> regionSpecList;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -56,11 +55,11 @@ public class ConnectomeGenSpec {
         this.genSpecVersion = genSpecVersion;
     }
 
-    public List<ClusterSpec> getClusterSpecList() {
-        return clusterSpecList;
+    public List<RegionSpec> getRegionSpecList() {
+        return regionSpecList;
     }
 
-    public void setClusterSpecList(List<ClusterSpec> clusterSpecList) {
-        this.clusterSpecList = clusterSpecList;
+    public void setRegionSpecList(List<RegionSpec> regionSpecList) {
+        this.regionSpecList = regionSpecList;
     }
 }

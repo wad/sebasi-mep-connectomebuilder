@@ -1,0 +1,25 @@
+{
+  "genSpecVersion": "INITIAL_001",
+  "regionSpecList": [
+    {
+      "clusterSpecList": [
+        {
+          "numNeuronsMin": 10,
+          "numNeuronsMax": 20,
+          "numSynapsesLocalMin": 4,
+          "numSynapsesLocalMax": 6,
+          "initialSynapticStrengthMin": 1,
+          "initialSynapticStrengthMax": 10
+        },
+        {
+          "numNeuronsMin": 100,
+          "numNeuronsMax": 200,
+          "numSynapsesLocalMin": 40,
+          "numSynapsesLocalMax": 60,
+          "initialSynapticStrengthMin": 10,
+          "initialSynapticStrengthMax": 100
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,10 @@ public class ClusterSpec {
 
     int numNeuronsMin;
     int numNeuronsMax;
-    int eachNeuronListensToHowManyOtherNeuronsInThisCluster;
+    int numSynapsesLocalMin;
+    int numSynapsesLocalMax;
+    int initialSynapticStrengthMin;
+    int initialSynapticStrengthMax;
 
     public ClusterSpec() {
     }
@@ -25,11 +28,35 @@ public class ClusterSpec {
         this.numNeuronsMax = numNeuronsMax;
     }
 
-    public int getEachNeuronListensToHowManyOtherNeuronsInThisCluster() {
-        return eachNeuronListensToHowManyOtherNeuronsInThisCluster;
+    public int getNumSynapsesLocalMin() {
+        return numSynapsesLocalMin;
     }
 
-    public void setEachNeuronListensToHowManyOtherNeuronsInThisCluster(int eachNeuronListensToHowManyOtherNeuronsInThisCluster) {
-        this.eachNeuronListensToHowManyOtherNeuronsInThisCluster = eachNeuronListensToHowManyOtherNeuronsInThisCluster;
+    public void setNumSynapsesLocalMin(int numSynapsesLocalMin) {
+        this.numSynapsesLocalMin = numSynapsesLocalMin;
+    }
+
+    public int getNumSynapsesLocalMax() {
+        return numSynapsesLocalMax;
+    }
+
+    public void setNumSynapsesLocalMax(int numSynapsesLocalMax) {
+        this.numSynapsesLocalMax = numSynapsesLocalMax;
+    }
+
+    public int getInitialSynapticStrengthMin() {
+        return initialSynapticStrengthMin;
+    }
+
+    public void setInitialSynapticStrengthMin(int initialSynapticStrengthMin) {
+        this.initialSynapticStrengthMin = initialSynapticStrengthMin;
+    }
+
+    public int getInitialSynapticStrengthMax() {
+        return initialSynapticStrengthMax;
+    }
+
+    public void setInitialSynapticStrengthMax(int initialSynapticStrengthMax) {
+        this.initialSynapticStrengthMax = initialSynapticStrengthMax;
     }
 }

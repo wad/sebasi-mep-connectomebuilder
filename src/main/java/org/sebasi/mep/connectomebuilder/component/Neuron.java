@@ -1,18 +1,41 @@
 package org.sebasi.mep.connectomebuilder.component;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.sebasi.mep.connectomebuilder.util.GlobalStaticHelper;
+import org.sebasi.mep.connectomebuilder.util.NidUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Neuron extends AbstractComponent {
 
     // A neuron has a bunch of synapses.
-    private Set<Synapse> dendriticSynapses = new HashSet<>();
+    private List<Synapse> dendriticSynapsesLocal;
 
+    private short lid;
     private int accumulatedSignal = 0;
-
     private boolean justFired;
-
     private int firingThreshold = 10;
+
+    public Neuron(
+            short lid,
+            int numInitialSynapsesLocalMin,
+            int numInitialSynapsesLocalMax,
+            int initialSynapticStrengthMin,
+            int initialSynapticStrengthMax) {
+
+        this.lid = lid;
+
+        int numLocalSynapses = GlobalStaticHelper.getRandomUtil().getRandomNumber(
+                numInitialSynapsesLocalMin,
+                numInitialSynapsesLocalMax);
+        if (numInitialSynapsesLocalMax > NidUtil.MAX_NUM_NEURONS_PER_CLUSTER) {
+            throw new RuntimeException("Too many synapses requested: " + numInitialSynapsesLocalMax);
+        }
+
+        dendriticSynapsesLocal = new ArrayList<>(numLocalSynapses);
+
+        // todo: Set up synapses that connect out of the cluster.
+    }
 
     public void fireIfReady() {
         if (accumulatedSignal >= firingThreshold) {
@@ -26,11 +49,15 @@ public class Neuron extends AbstractComponent {
     }
 
     public void checkUpstreamConnections(Brain neuronGroup) {
-        for (Synapse synapse : dendriticSynapses) {
-            if (neuronGroup.getNeuron(synapse.getPreSynapticNid()).getDidJustFire()) {
+        for (Synapse synapse : dendriticSynapsesLocal) {
+            if (didPreSynapticNeuronJustFire()) {
                 accumulatedSignal += synapse.getSynapseStrength();
             }
         }
+    }
+
+    private boolean didPreSynapticNeuronJustFire() {
+        return false; // todo
     }
 
     public boolean getDidJustFire() {
@@ -43,8 +70,8 @@ public class Neuron extends AbstractComponent {
 
     @Override
     public void report(StringBuilder builder) {
-        builder.append("\nNumber of synapses: ").append(dendriticSynapses.size());
-        for (Synapse dendriticSynapse : dendriticSynapses) {
+        builder.append("\nNumber of synapses: ").append(dendriticSynapsesLocal.size());
+        for (Synapse dendriticSynapse : dendriticSynapsesLocal) {
             dendriticSynapse.report(builder);
         }
     }

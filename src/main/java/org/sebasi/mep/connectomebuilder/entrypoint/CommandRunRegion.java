@@ -1,6 +1,6 @@
 package org.sebasi.mep.connectomebuilder.entrypoint;
 
-import org.sebasi.mep.connectomebuilder.component.NidUtil;
+import org.sebasi.mep.connectomebuilder.util.NidUtil;
 import org.sebasi.mep.connectomebuilder.util.Delayer;
 import org.sebasi.mep.connectomebuilder.util.FileUtil;
 import org.sebasi.mep.connectomebuilder.util.TextOutput;

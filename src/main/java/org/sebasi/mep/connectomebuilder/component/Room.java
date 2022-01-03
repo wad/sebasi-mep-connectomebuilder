@@ -1,7 +1,6 @@
 package org.sebasi.mep.connectomebuilder.component;
 
 import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
-import org.sebasi.mep.connectomebuilder.util.SaveFile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,15 +19,6 @@ public class Room extends AbstractComponent {
         ConnectomeGenSpec brainSpec = ConnectomeGenSpec.fromJson(
                 new File(pathToConnectomeSpecificationFile));
         bodies.add(new Body(new Brain(brainSpec)));
-    }
-
-    public void performTicks(int numTicksToRun) {
-        for (Body body : bodies) {
-            Brain brain = body.getBrain();
-            for (int tick = 0; tick < numTicksToRun; tick++) {
-                brain.processTick();
-            }
-        }
     }
 
     @Override

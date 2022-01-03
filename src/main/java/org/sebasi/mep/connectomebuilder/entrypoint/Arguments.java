@@ -2,7 +2,7 @@ package org.sebasi.mep.connectomebuilder.entrypoint;
 
 import com.beust.jcommander.Parameter;
 import org.apache.commons.lang3.StringUtils;
-import org.sebasi.mep.connectomebuilder.component.NidUtil;
+import org.sebasi.mep.connectomebuilder.util.NidUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,12 +52,6 @@ public class Arguments {
     )
     String rid;
 
-    @Parameter(
-            names = {"--numTicks"},
-            description = "Number of ticks to run before exiting."
-    )
-    int numTicks;
-
     public boolean isHelp() {
         return help;
     }
@@ -97,9 +91,5 @@ public class Arguments {
         }
 
         return Arrays.asList(brainSpecs.split(","));
-    }
-
-    public int getNumTicks() {
-        return numTicks;
     }
 }

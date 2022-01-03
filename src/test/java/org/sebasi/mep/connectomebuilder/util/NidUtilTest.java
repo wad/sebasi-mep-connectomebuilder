@@ -1,10 +1,20 @@
-package org.sebasi.mep.connectomebuilder.component;
+package org.sebasi.mep.connectomebuilder.util;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NidUtilTest {
+
+    static final long SIGN_REMOVAL_MASK_1_BYTE = 0x00000000000000FFL;
+    static final long SIGN_REMOVAL_MASK_2_BYTE = 0x000000000000FFFFL;
+
+    @Test
+    public void testMaximums() {
+        assertEquals(256, NidUtil.MAX_NUM_REGIONS);
+        assertEquals(65536, NidUtil.MAX_NUM_CLUSTERS_PER_REGION);
+        assertEquals(65536, NidUtil.MAX_NUM_NEURONS_PER_CLUSTER);
+    }
 
     @Test
     public void testMakeNidsFromHexStrings() {
@@ -87,18 +97,24 @@ public class NidUtilTest {
     @Test
     public void testGetRidFromHexString() {
         assertEquals(4, NidUtil.getRidFromHexString("04"));
-        assertEquals(254, NidUtil.getRidFromHexString("fe"));
+        assertEquals(-2, NidUtil.getRidFromHexString("fe"));
+        assertEquals(4L, NidUtil.getRidFromHexString("04") & SIGN_REMOVAL_MASK_1_BYTE);
+        assertEquals(254L, NidUtil.getRidFromHexString("fe") & SIGN_REMOVAL_MASK_1_BYTE);
     }
 
     @Test
     public void testGetCidFromHexString() {
         assertEquals(4, NidUtil.getCidFromHexString("0004"));
-        assertEquals(65534, NidUtil.getCidFromHexString("fffe"));
+        assertEquals(-2, NidUtil.getCidFromHexString("fffe"));
+        assertEquals(4L, NidUtil.getCidFromHexString("0004") & SIGN_REMOVAL_MASK_2_BYTE);
+        assertEquals(65534L, NidUtil.getCidFromHexString("fffe") & SIGN_REMOVAL_MASK_2_BYTE);
     }
 
     @Test
     public void testGetLidFromHexString() {
         assertEquals(4, NidUtil.getLidFromHexString("0004"));
-        assertEquals(65534, NidUtil.getLidFromHexString("fffe"));
+        assertEquals(4L, NidUtil.getLidFromHexString("0004") & SIGN_REMOVAL_MASK_2_BYTE);
+        assertEquals(-2, NidUtil.getLidFromHexString("fffe"));
+        assertEquals(65534L, NidUtil.getLidFromHexString("fffe") & SIGN_REMOVAL_MASK_2_BYTE);
     }
 }

@@ -1,4 +1,4 @@
-package org.sebasi.mep.connectomebuilder.component;
+package org.sebasi.mep.connectomebuilder.util;
 
 /*
 Neuron ID. See design document for more information.
@@ -16,12 +16,15 @@ public class NidUtil {
 
     // Region ID. 0xRR--------
     static final int NUM_BYTES_IN_RID = 1;
+    public static final int MAX_NUM_REGIONS = 1 << (NUM_BYTES_IN_RID * 8);
 
     // Cluster ID. Fits in a `short`. 0x--CCCC----
     static final int NUM_BYTES_IN_CID = 2;
+    public static final int MAX_NUM_CLUSTERS_PER_REGION = 1 << (NUM_BYTES_IN_CID * 8);
 
     // Local ID. Fits in a `short`. 0x------LLLL
     static final int NUM_BYTES_IN_LID = 2;
+    public static final int MAX_NUM_NEURONS_PER_CLUSTER = 1 << (NUM_BYTES_IN_LID * 8);
 
     // The full NID is all of these together: 0xRRCCCCLLLL
     // Fits in a `long` but leaves 3 extra unused bytes.
@@ -137,14 +140,14 @@ public class NidUtil {
         if (cidString.length() != NUM_BYTES_IN_CID * 2) {
             throw new RuntimeException("Invalid CID specified: '" + cidString + "'");
         }
-        return (short)((stringToByte(cidString.substring(0, 2)) << 8) + stringToByte(cidString.substring(2, 4)));
+        return (short) ((stringToByte(cidString.substring(0, 2)) << 8) | stringToByte(cidString.substring(2, 4)));
     }
 
     public static short getLidFromHexString(String lidString) {
         if (lidString.length() != NUM_BYTES_IN_LID * 2) {
             throw new RuntimeException("Invalid LID specified: '" + lidString + "'");
         }
-        return (short)((stringToByte(lidString.substring(0, 2)) << 8) + stringToByte(lidString.substring(2, 4)));
+        return (short) ((stringToByte(lidString.substring(0, 2)) << 8) | stringToByte(lidString.substring(2, 4)));
     }
 
     public static String convertRidToHexString(byte rid) {
@@ -152,11 +155,11 @@ public class NidUtil {
     }
 
     public static String convertCidToHexString(short cid) {
-        return byteToString((byte)(cid >> 8)) + byteToString((byte)(cid & 0xFF));
+        return byteToString((byte) (cid >> 8)) + byteToString((byte) (cid & 0xFF));
     }
 
     public static String convertLidToHexString(short lid) {
-        return byteToString((byte)(lid >> 8)) + byteToString((byte)(lid & 0xFF));
+        return byteToString((byte) (lid >> 8)) + byteToString((byte) (lid & 0xFF));
     }
 
     static int getByteIndexOfNidWithValidation(

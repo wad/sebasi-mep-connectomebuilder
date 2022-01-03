@@ -1,46 +1,39 @@
 package org.sebasi.mep.connectomebuilder.component;
 
-import org.sebasi.mep.connectomebuilder.generator.ClusterSpec;
 import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
-import org.sebasi.mep.connectomebuilder.util.GlobalStaticHelper;
+import org.sebasi.mep.connectomebuilder.generator.RegionSpec;
+import org.sebasi.mep.connectomebuilder.util.NidUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Brain extends AbstractComponent {
 
-    // A brain has a bunch of neurons.
-    private Map<NidUtil, Neuron> neuronsByNid = new HashMap<>();
+    List<Region> regions;
 
     public Brain(ConnectomeGenSpec spec) {
-        for (ClusterSpec clusterSpec : spec.getClusterSpecList()) {
-            int numNeurons = GlobalStaticHelper.getRandomUtil().getRandomNumber(
-                    clusterSpec.getNumNeuronsMin(),
-                    clusterSpec.getNumNeuronsMax());
-            List<NidUtil> cluster = new ArrayList<>(numNeurons);
-            for (int i = 0; i < numNeurons; i++) {
-                Neuron neuron = new Neuron();
-//                NidUtil nid = new NidUtil();
-//                cluster.add(nid);
-//                neuronsByNid.put(nid, neuron);
-            }
+
+        List<RegionSpec> regionSpecList = spec.getRegionSpecList();
+        if (regionSpecList.size() > NidUtil.MAX_NUM_REGIONS) {
+            throw new RuntimeException("Too many regions. Found " + regionSpecList.size()
+                    + " but max is " + NidUtil.MAX_NUM_REGIONS + ".");
         }
-    }
 
-    public Neuron getNeuron(NidUtil nid) {
-        return neuronsByNid.get(nid);
-    }
+        // todo: Obviously, there are WAY too many entities being created in all these nested loops.
+        //  This is just a temporary step in development.
+        //  Need to write these entities to disk, remove references to the objects, and then garbage-collect.
 
-    public void processTick() {
-        neuronsByNid.values().forEach(Neuron::fireIfReady);
-        neuronsByNid.values().forEach(n -> n.checkUpstreamConnections(this));
-        neuronsByNid.values().forEach(Neuron::resetFiringStatus);
+        regions = new ArrayList<>(regionSpecList.size());
+        for (byte rid = 0; rid < regionSpecList.size(); rid++) {
+            regions.add(
+                    new Region(
+                            rid,
+                            regionSpecList.get(rid)));
+        }
     }
 
     @Override
     public void report(StringBuilder builder) {
-        builder.append("\nNumber of neurons: ").append(neuronsByNid.size());
+        builder.append("\nNumber of regions: ").append(regions.size());
     }
 }

@@ -1,5 +1,7 @@
 package org.sebasi.mep.connectomebuilder.component;
 
+import org.sebasi.mep.connectomebuilder.util.NidUtil;
+
 public class Synapse extends AbstractComponent {
 
     // A synapse belongs to the neuron on the post-synaptic side of the connection.

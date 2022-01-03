@@ -2,10 +2,18 @@ package org.sebasi.mep.connectomebuilder.entrypoint;
 
 public enum Command {
 
-    runDemo("Run a quick demo."),
+    // This command should be run first, on the driving computer, to set up the files in the directory structure.
+    // After this runs, you can apply NFS mounts to move regions to other machines.
     createDirectoryStructure(""),
+
+    // Now that the NFS mounts are set up, run this command on the driving computer to make the initial data files on all the machines.
     createDataFiles(""),
+
+    // Now that the initial files are everywhere, on each machine that has a region, run this command.
     runRegion(""),
+
+    // Now that all the regions are running, and waiting to be told to start ticking, run this on the driving computer
+    // to start everything going.
     startTicking("");
 
     String descriptionMessage;
@@ -28,9 +36,6 @@ public enum Command {
 
     public void invoke(Arguments arguments) {
         switch(this) {
-            case runDemo:
-                new CommandRunDemo(arguments);
-                break;
             case createDirectoryStructure:
                 new CommandCreateDirectoryStructure(arguments);
                 break;
