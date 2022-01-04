@@ -2,7 +2,7 @@ package org.sebasi.mep.connectomebuilder.generator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.sebasi.mep.connectomebuilder.util.GlobalStaticHelper;
 
 public enum GenSpecVersion {
 
@@ -17,11 +17,9 @@ public enum GenSpecVersion {
         this.label = label;
     }
 
-    public static GenSpecVersion determineViaJson(
-            String json,
-            ObjectMapper objectMapper) {
+    public static GenSpecVersion determineViaJson(String json) {
         try {
-            JsonNode jsonObject = objectMapper.readTree(json);
+            JsonNode jsonObject = GlobalStaticHelper.objectMapper.readTree(json);
             JsonNode versionAsJsonObject = jsonObject.get("genSpecVersion");
             return determineViaVersionString(versionAsJsonObject.asText());
         } catch (JsonProcessingException e) {

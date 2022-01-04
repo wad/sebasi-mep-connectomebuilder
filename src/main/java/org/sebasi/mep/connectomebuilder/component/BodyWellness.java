@@ -35,7 +35,7 @@ public class BodyWellness {
 
     public void initializeWithRandomValues() {
         for (int i = 0; i < NUM_WELLNESS_DIMENSIONS; i++) {
-            wellnessDimensions[i] = GlobalStaticHelper.getRandomUtil().getRandomNumber(
+            wellnessDimensions[i] = GlobalStaticHelper.randomUtil.getRandomNumber(
                     INITIAL_VALUE_MIN,
                     INITIAL_VALUE_MAX);
         }

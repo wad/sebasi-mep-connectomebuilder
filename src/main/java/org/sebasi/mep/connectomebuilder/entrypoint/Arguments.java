@@ -48,6 +48,12 @@ public class Arguments {
     )
     String rid;
 
+    @Parameter(
+            names = {"--personName"},
+            description = "The initial name to assign to the person."
+    )
+    String personName;
+
     public boolean isHelp() {
         return help;
     }
@@ -83,5 +89,9 @@ public class Arguments {
 
     public String getCgsPathAndFilename() {
         return cgsPathAndFilename;
+    }
+
+    public String getPersonName() {
+        return personName;
     }
 }

@@ -1,11 +1,14 @@
 package org.sebasi.mep.connectomebuilder.util;
 
-import org.sebasi.mep.connectomebuilder.generator.ClusterSpec;
 import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
 import org.sebasi.mep.connectomebuilder.generator.RegionSpec;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -137,7 +140,7 @@ public class FileUtil {
         List<RegionSpec> regionSpecList = cgs.getRegionSpecList();
         for (RegionSpec regionSpec : regionSpecList) {
 
-            String regionDirectoryPath = brainDirectoryPath + "/r" + NidUtil.byteToString((byte)regionIndex);
+            String regionDirectoryPath = brainDirectoryPath + "/r" + NidUtil.convertRidToHexString((byte) regionIndex);
             File regionDirectory = new File(regionDirectoryPath);
             if (!regionDirectory.mkdir()) {
                 throw new RuntimeException("Failed to make region directory: " + regionDirectoryPath);
@@ -145,12 +148,95 @@ public class FileUtil {
 
             int numClusters = regionSpec.getClusterSpecList().size();
             for (int clusterIndex = 0; clusterIndex < numClusters; clusterIndex++) {
-                String clusterDirectoryPath = regionDirectoryPath + "/c" + NidUtil.byteToString((byte)clusterIndex);
+                String clusterDirectoryPath = regionDirectoryPath + "/c" + NidUtil.convertCidToHexString((short) clusterIndex);
                 File clusterDirectory = new File(clusterDirectoryPath);
                 if (!clusterDirectory.mkdir()) {
                     throw new RuntimeException("Failed to make cluster directory: " + clusterDirectoryPath);
                 }
             }
+        }
+    }
+
+    public static void writeCgsFile(
+            String einDirectoryPath,
+            String cgsContents) {
+        writeStringToFile(
+                einDirectoryPath,
+                FILENAME_CGS,
+                cgsContents);
+    }
+
+    public static String readFileIntoString(String pathAndFilename) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(pathAndFilename)));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read file '" + pathAndFilename + "' into string: " + e.getMessage(), e);
+        }
+    }
+
+    public static String getCgsPathAndFilename(String einDirectory) {
+        return einDirectory + "/" + FILENAME_CGS;
+    }
+
+    public static void writeRoom(
+            String einDirectory,
+            String roomJson) {
+        writeStringToFile(
+                einDirectory + "/" + DIRNAME_ROOM,
+                FILENAME_ROOM,
+                roomJson);
+    }
+
+    public static void writeBody(
+            String einDirectory,
+            String bodyJson) {
+        writeStringToFile(
+                einDirectory + "/" + DIRNAME_BODY,
+                FILENAME_BODY,
+                bodyJson);
+    }
+
+    public static void writeBrain(
+            String einDirectory,
+            String brainJson) {
+        writeStringToFile(
+                einDirectory + "/" + DIRNAME_BRAIN,
+                FILENAME_BRAIN,
+                brainJson);
+    }
+
+    public static void writeRegion(
+            String einDirectory,
+            String regionJson,
+            byte rid) {
+        writeStringToFile(
+                einDirectory + "/r" + NidUtil.convertRidToHexString(rid),
+                FILENAME_REGION,
+                regionJson);
+    }
+
+    public static void writeCluster(
+            String einDirectory,
+            String regionJson,
+            byte rid,
+            short cid) {
+        writeStringToFile(
+                einDirectory + "/r" + NidUtil.convertRidToHexString(rid) + "/c" + NidUtil.convertCidToHexString(cid),
+                FILENAME_REGION,
+                regionJson);
+    }
+
+    static void writeStringToFile(
+            String path,
+            String filename,
+            String fileContents) {
+        String pathAndFilename = path + "/" + filename;
+        try (
+                FileWriter fileWriter = new FileWriter(pathAndFilename);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            bufferedWriter.write(fileContents);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to write file: " + pathAndFilename, e);
         }
     }
 

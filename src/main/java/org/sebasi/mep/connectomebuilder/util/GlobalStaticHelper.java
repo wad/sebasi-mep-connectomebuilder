@@ -1,14 +1,8 @@
 package org.sebasi.mep.connectomebuilder.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class GlobalStaticHelper {
-
-    private static final RandomUtil randomUtil;
-
-    static {
-        randomUtil = new RandomUtil();
-    }
-
-    public static RandomUtil getRandomUtil() {
-        return randomUtil;
-    }
+    public static final RandomUtil randomUtil = new RandomUtil();
+    public static final ObjectMapper objectMapper = new ObjectMapper();
 }

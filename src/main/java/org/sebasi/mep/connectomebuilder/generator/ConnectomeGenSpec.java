@@ -1,7 +1,7 @@
 package org.sebasi.mep.connectomebuilder.generator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.sebasi.mep.connectomebuilder.util.GlobalStaticHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,15 +15,13 @@ public class ConnectomeGenSpec {
     GenSpecVersion genSpecVersion;
     List<RegionSpec> regionSpecList;
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
     public ConnectomeGenSpec() {
         this.genSpecVersion = DEFAULT_VERSION;
     }
 
     public static ConnectomeGenSpec fromJson(File fileWithJson) {
         try {
-            return objectMapper.readValue(fileWithJson, ConnectomeGenSpec.class);
+            return GlobalStaticHelper.objectMapper.readValue(fileWithJson, ConnectomeGenSpec.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -33,7 +31,7 @@ public class ConnectomeGenSpec {
 
     public static ConnectomeGenSpec fromJson(String json) {
         try {
-            return objectMapper.readValue(json, ConnectomeGenSpec.class);
+            return GlobalStaticHelper.objectMapper.readValue(json, ConnectomeGenSpec.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +39,7 @@ public class ConnectomeGenSpec {
 
     public String toJson() {
         try {
-            return objectMapper.writeValueAsString(this);
+            return GlobalStaticHelper.objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

@@ -1,31 +1,55 @@
 package org.sebasi.mep.connectomebuilder.component;
 
-import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.sebasi.mep.connectomebuilder.util.FileUtil;
+import org.sebasi.mep.connectomebuilder.util.GlobalStaticHelper;
 
 public class Room extends AbstractComponent {
 
-    // A room can hold zero or more bodies.
-    List<Body> bodies = new ArrayList<>();
+    int width = 30;
+    int length = 20;
+    int height = 3;
 
-    // todo: World can include some other environmental stuff in it later.
+    // todo: The room can include some other environmental stuff in it later.
     // bodies can move around in the room. Different parts of the room can have
     // different impacts on the wellness.
 
-    public void generateBody(String pathToConnectomeSpecificationFile) {
-        ConnectomeGenSpec brainSpec = ConnectomeGenSpec.fromJson(
-                new File(pathToConnectomeSpecificationFile));
-        bodies.add(new Body(new Brain(brainSpec)));
+    public void writeInitialDataFiles(String einDirectory) {
+        try {
+            FileUtil.writeRoom(
+                    einDirectory,
+                    GlobalStaticHelper.objectMapper.writeValueAsString(this));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Problem serializing room into json: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void report(StringBuilder builder) {
-        builder.append("\nNum bodies in room: ").append(bodies.size());
-        for (Body body : bodies) {
-            body.report(builder);
-        }
+        builder.append("\nThere is a room.");
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

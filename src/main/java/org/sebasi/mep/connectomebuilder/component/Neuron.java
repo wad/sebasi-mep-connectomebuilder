@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Neuron extends AbstractComponent {
 
-    // A neuron has a bunch of synapses.
+    // todo: These need to be saved as a binary file
     private List<Synapse> dendriticSynapsesLocal;
 
     private short lid;
@@ -25,7 +25,7 @@ public class Neuron extends AbstractComponent {
 
         this.lid = lid;
 
-        int numLocalSynapses = GlobalStaticHelper.getRandomUtil().getRandomNumber(
+        int numLocalSynapses = GlobalStaticHelper.randomUtil.getRandomNumber(
                 numInitialSynapsesLocalMin,
                 numInitialSynapsesLocalMax);
         if (numInitialSynapsesLocalMax > NidUtil.MAX_NUM_NEURONS_PER_CLUSTER) {
@@ -33,6 +33,7 @@ public class Neuron extends AbstractComponent {
         }
 
         dendriticSynapsesLocal = new ArrayList<>(numLocalSynapses);
+        // todo: Actually create some synapses with strengths.
 
         // todo: Set up synapses that connect out of the cluster.
     }
