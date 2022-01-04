@@ -4,10 +4,6 @@ import com.beust.jcommander.Parameter;
 import org.apache.commons.lang3.StringUtils;
 import org.sebasi.mep.connectomebuilder.util.NidUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Arguments {
 
     @Parameter(
@@ -41,10 +37,10 @@ public class Arguments {
     String controlDirectory;
 
     @Parameter(
-            names = {"--brainSpecs"},
-            description = "Comma-delimited list of path-and-filenames to json files specifying brain setups."
+            names = {"--cgs"},
+            description = "Path and filename of the JSON-format Connectome Generation Specification file."
     )
-    String brainSpecs;
+    String cgsPathAndFilename;
 
     @Parameter(
             names = {"--rid"},
@@ -85,11 +81,7 @@ public class Arguments {
         return controlDirectory;
     }
 
-    public List<String> getBrainSpecs() {
-        if (brainSpecs == null) {
-            return new ArrayList<>();
-        }
-
-        return Arrays.asList(brainSpecs.split(","));
+    public String getCgsPathAndFilename() {
+        return cgsPathAndFilename;
     }
 }

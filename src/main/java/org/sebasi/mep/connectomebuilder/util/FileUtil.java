@@ -1,5 +1,9 @@
 package org.sebasi.mep.connectomebuilder.util;
 
+import org.sebasi.mep.connectomebuilder.generator.ClusterSpec;
+import org.sebasi.mep.connectomebuilder.generator.ConnectomeGenSpec;
+import org.sebasi.mep.connectomebuilder.generator.RegionSpec;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -91,6 +95,63 @@ public class FileUtil {
                 .map(rid -> pathToControlDirectory + "/" + generateShutdownFilename(rid))
                 .map(File::new)
                 .forEach(File::delete);
+    }
+
+    public static void createDirectoryStructure(
+            String einDirectory,
+            ConnectomeGenSpec cgs) {
+
+        File einFile = new File(einDirectory);
+        if (einFile.exists()) {
+            throw new RuntimeException("I can't create the directory structure there, it already exists: " + einDirectory);
+        }
+        if (!einFile.mkdir()) {
+            throw new RuntimeException("Was not able to create directory for some reason: " + einDirectory);
+        }
+
+        String controlDirectoryPath = einDirectory + "/" + DIRNAME_CONTROL;
+        File controlDirectory = new File(controlDirectoryPath);
+        if (!controlDirectory.mkdir()) {
+            throw new RuntimeException("Failed to make control directory: " + controlDirectoryPath);
+        }
+
+        String roomDirectoryPath = einDirectory + "/" + DIRNAME_ROOM;
+        File roomDirectory = new File(roomDirectoryPath);
+        if (!roomDirectory.mkdir()) {
+            throw new RuntimeException("Failed to make room directory: " + roomDirectoryPath);
+        }
+
+        String bodyDirectoryPath = einDirectory + "/" + DIRNAME_BODY;
+        File bodyDirectory = new File(bodyDirectoryPath);
+        if (!bodyDirectory.mkdir()) {
+            throw new RuntimeException("Failed to make body directory: " + bodyDirectoryPath);
+        }
+
+        String brainDirectoryPath = einDirectory + "/" + DIRNAME_BRAIN;
+        File brainDirectory = new File(brainDirectoryPath);
+        if (!brainDirectory.mkdir()) {
+            throw new RuntimeException("Failed to make brain directory: " + brainDirectoryPath);
+        }
+
+        int regionIndex = 0;
+        List<RegionSpec> regionSpecList = cgs.getRegionSpecList();
+        for (RegionSpec regionSpec : regionSpecList) {
+
+            String regionDirectoryPath = brainDirectoryPath + "/r" + NidUtil.byteToString((byte)regionIndex);
+            File regionDirectory = new File(regionDirectoryPath);
+            if (!regionDirectory.mkdir()) {
+                throw new RuntimeException("Failed to make region directory: " + regionDirectoryPath);
+            }
+
+            int numClusters = regionSpec.getClusterSpecList().size();
+            for (int clusterIndex = 0; clusterIndex < numClusters; clusterIndex++) {
+                String clusterDirectoryPath = regionDirectoryPath + "/c" + NidUtil.byteToString((byte)clusterIndex);
+                File clusterDirectory = new File(clusterDirectoryPath);
+                if (!clusterDirectory.mkdir()) {
+                    throw new RuntimeException("Failed to make cluster directory: " + clusterDirectoryPath);
+                }
+            }
+        }
     }
 
     static List<Byte> listRidsFromReadyFiles(String pathToControlDirectory) {
