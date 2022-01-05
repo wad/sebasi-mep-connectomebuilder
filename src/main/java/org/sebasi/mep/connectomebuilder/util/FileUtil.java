@@ -15,12 +15,16 @@ import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
+// Communication between remotes and the driving computer is done entirely by putting files on the filesystems.
+// We can use NFS mounts to spread the filesystem across the network. We can use mount points to spread the filesystem
+// across SSDs on a single machine. Very flexible.
 public class FileUtil {
 
     private static final String FILENAME_CGS = "cgs.json";
     private static final String DIRNAME_CONTROL = "control";
     private static final int FILENAME_READY_LENGTH = "rXX.ready".length();
-    private static final int FILENAME_SHUTDOWN_LENGTH = "rXX.shutdown".length();
+    private static final String FILENAME_STOP_DRIVER = "stopDriver";
+    private static final String FILENAME_STOP_All_REMOTES = "stopAllRemotes";
     private static final String DIRNAME_ROOM = "room";
     private static final String FILENAME_ROOM = "room.json";
     private static final String DIRNAME_BODY = "body";
@@ -40,11 +44,15 @@ public class FileUtil {
     // to see if one has arrived. Then it can open it, parse the contents, and take the appropriate action,
     // such as emitting a report.
 
-    public static boolean isShutdownFilePresent(
-            String pathToControlDirectory,
-            byte rid) {
-        String shutdownFilenameWithPath = pathToControlDirectory + "/" + generateShutdownFilename(rid);
-        File file = new File(shutdownFilenameWithPath);
+    public static boolean isStopAllRemotesFilePresent(String pathToControlDirectory) {
+        String stopAllRemotesFilenameWithPath = pathToControlDirectory + "/" + FILENAME_STOP_All_REMOTES;
+        File file = new File(stopAllRemotesFilenameWithPath);
+        return file.exists();
+    }
+
+    public static boolean isStopDriverFilePresent(String pathToControlDirectory) {
+        String stopDriverWithPath = pathToControlDirectory + "/" + FILENAME_STOP_DRIVER;
+        File file = new File(stopDriverWithPath);
         return file.exists();
     }
 
@@ -81,23 +89,34 @@ public class FileUtil {
                 .forEach(File::delete);
     }
 
-    public static void deleteShutdownFile(
-            String pathToControlDirectory,
-            byte rid) {
-        String fileWithPath = pathToControlDirectory + "/" + generateShutdownFilename(rid);
-        File file = new File(fileWithPath);
-        //noinspection ResultOfMethodCallIgnored
-        file.delete();
+    public static void createStopAllRemotesFile(String einDirectory) {
+        File file = new File(einDirectory + "/" + DIRNAME_CONTROL + "/" + FILENAME_STOP_All_REMOTES);
+        try {
+            if (!file.createNewFile()) {
+                throw new RuntimeException("Failed to create the stopAllRemotes file under " + einDirectory + ".");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to create the stopAllRemotes file under " + einDirectory + ": " + e.getMessage(), e);
+        }
     }
 
-    public static void shutdownRegions(
-            String pathToControlDirectory,
-            List<Byte> rids) {
+    public static void createStopDriverFile(String einDirectory) {
+        File file = new File(einDirectory + "/" + DIRNAME_CONTROL + "/" + FILENAME_STOP_DRIVER);
+        try {
+            if (!file.createNewFile()) {
+                throw new RuntimeException("Failed to create the stopDriver file under " + einDirectory + ".");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to create the stopDriver file under " + einDirectory + ": " + e.getMessage(), e);
+        }
+    }
+
+    public static void deleteStopFiles(
+            String einDirectory) {
         //noinspection ResultOfMethodCallIgnored
-        rids.stream()
-                .map(rid -> pathToControlDirectory + "/" + generateShutdownFilename(rid))
-                .map(File::new)
-                .forEach(File::delete);
+        new File(einDirectory + "/" + DIRNAME_CONTROL + "/" + FILENAME_STOP_All_REMOTES).delete();
+        //noinspection ResultOfMethodCallIgnored
+        new File(einDirectory + "/" + DIRNAME_CONTROL + "/" + FILENAME_STOP_DRIVER).delete();
     }
 
     public static void createDirectoryStructure(
@@ -264,9 +283,5 @@ public class FileUtil {
 
     static String generateReadyFilename(byte rid) {
         return "r" + NidUtil.convertRidToHexString(rid) + ".ready";
-    }
-
-    static String generateShutdownFilename(byte rid) {
-        return "r" + NidUtil.convertRidToHexString(rid) + ".shutdown";
     }
 }

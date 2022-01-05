@@ -54,6 +54,14 @@ public class Arguments {
     )
     String personName;
 
+    @Parameter(
+            names = {"--tickPollingSleep"},
+            description = "Number of milliseconds between checks for a ready file."
+    )
+    String tickPollingSleep;
+
+    private static final int DEFAULT_TICK_POLLING_SLEEP_IN_MILLIS = 500;
+
     public boolean isHelp() {
         return help;
     }
@@ -63,6 +71,9 @@ public class Arguments {
     }
 
     public String getEinParentDirectory() {
+        if (StringUtils.isBlank(einParentDirectory)) {
+            throw new RuntimeException("einParentDirectory is required.");
+        }
         return einParentDirectory;
     }
 
@@ -93,5 +104,16 @@ public class Arguments {
 
     public String getPersonName() {
         return personName;
+    }
+
+    public int getTickPollingSleep() {
+        if (StringUtils.isBlank(tickPollingSleep)) {
+            return DEFAULT_TICK_POLLING_SLEEP_IN_MILLIS;
+        }
+        try {
+            return Integer.parseInt(tickPollingSleep);
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid tick polling sleep value: " + tickPollingSleep);
+        }
     }
 }

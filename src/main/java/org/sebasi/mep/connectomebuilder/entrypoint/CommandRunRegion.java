@@ -11,10 +11,12 @@ public class CommandRunRegion extends CommandParent {
     byte rid;
     String ridAsHexString;
     long numTicksThisSession = 0L;
+    int tickPollingSleepInMilliseconds;
 
     public CommandRunRegion(Arguments arguments) {
         super(arguments);
 
+        tickPollingSleepInMilliseconds = arguments.getTickPollingSleep();
         controlDirectory = arguments.getControlDirectory();
         rid = arguments.getRid();
         ridAsHexString = NidUtil.convertRidToHexString(rid);
@@ -28,22 +30,21 @@ public class CommandRunRegion extends CommandParent {
 
         while (true) {
 
-            if (isShutdownDetected()) {
-                TextOutput.showMessage("Shutdown detected. Exiting region cleanly. Rid=" + ridAsHexString);
-                FileUtil.deleteShutdownFile(controlDirectory, rid);
+            if (isStopAllRemotesDetected()) {
+                TextOutput.showMessage("Stop all remotes file detected. Exiting region cleanly after " + numTicksThisSession + " ticks. Rid=" + ridAsHexString);
                 break;
             }
 
             if (isReadyToTick()) {
                 processTick();
             } else {
-                Delayer.delay(1000);
+                Delayer.delay(tickPollingSleepInMilliseconds);
             }
         }
     }
 
-    boolean isShutdownDetected() {
-        return FileUtil.isShutdownFilePresent(controlDirectory, rid);
+    boolean isStopAllRemotesDetected() {
+        return FileUtil.isStopAllRemotesFilePresent(controlDirectory);
     }
 
     boolean isReadyToTick() {
