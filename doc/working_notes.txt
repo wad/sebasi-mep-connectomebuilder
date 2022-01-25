@@ -1,8 +1,8 @@
 Design document link: https://docs.google.com/document/d/1BSnQlyP14tOMubVGYOAM8K7sRPbaF5jT8RM1JiKsDlU/edit?usp=sharing
 
-==================================================
-=== NOTES AND INSIGHTS CAPTURED WHILE STUDYING ===
-==================================================
+=================================================================
+=== NOTES AND INSIGHTS CAPTURED WHILE STUDYING AND DISCUSSING ===
+=================================================================
 
 Insight: A sapient mind requires a brain with a suitable connectome shape.
 The initial connectome has a basic structure of connections that, while it doesn't support a mind yet, can do so eventually.
@@ -49,6 +49,10 @@ Stages of development:
 1. Superabundant initial connections
 2. Sensory stimulation plus spontaneous firing, see which connections are useful, strengthen them, and remove the others
 3. Remove entire neurons that lack sufficient connectivity
+
+Learning causes synapses, the connections between neurons, to proliferate in some areas and disappear in others rather
+than merely changing their strength, as commonly thought. These changes in synapses may help explain how memories are
+formed and why certain kinds of memories are stronger than others.
 
 ========================================
 === IDEAS ON SOME PARAMETERS TO VARY ===
